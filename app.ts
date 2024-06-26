@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
-import userRoute from './route/userRoute';
+import userRoute from './routes/user.route';
+import productCategories from './routes/product-categorie.Route'
+import productVariants from './routes/product-variants.route'
+import product from './routes/product.Route'
 import express from "express"
 
 
@@ -35,6 +38,9 @@ class App {
 
     private initializeRoutes(): void {
         this.app.use('/user', userRoute);
+        this.app.use('/productCategories', productCategories)
+        this.app.use('/productVariant', productVariants)
+        this.app.use('/product', product)
     }
 
     private startServer(): void {
