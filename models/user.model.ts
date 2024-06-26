@@ -1,6 +1,6 @@
 
 import { model, Schema, Document } from 'mongoose';
-import { UserInterface } from '../interfaces/routes.interface';
+import { UserInterface } from '../interfaces/user.interface';
 
 const userSchema: Schema<UserInterface & Document> = new Schema({
     firstName: {

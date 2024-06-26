@@ -1,6 +1,6 @@
 import Joi from 'joi'
 import mongoose from 'mongoose';
-import userModel from '../model/usermodel';
+import userModel from '../models/user.model';
 
 const { ObjectId } = mongoose.Types;
 

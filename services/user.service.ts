@@ -1,7 +1,6 @@
-import userModel from '../model/usermodel';
-import { UserInterface } from '../interfaces/routes.interface';
+import userModel from '../models/user.model';
+import { UserInterface } from '../interfaces/user.interface';
 import jwt from 'jsonwebtoken'
-
 
 class UserService {
     public async createUser(userData: UserInterface) {
