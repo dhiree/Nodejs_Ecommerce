@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 import userRoute from './route/userRoute';
+import productCategories from './route/productCategoriesRoute'
+import productVariants from './route/productVariants'
+import productManagement from './route/productManagementRoute'
 import express from "express"
 
 
@@ -35,6 +38,9 @@ class App {
 
     private initializeRoutes(): void {
         this.app.use('/user', userRoute);
+        this.app.use('/productCategories', productCategories)
+        this.app.use('/productVariant', productVariants)
+        this.app.use('/productManagement', productManagement)
     }
 
     private startServer(): void {
@@ -42,6 +48,6 @@ class App {
             console.log(`Server started on http://localhost:${this.port}`);
         });
     }
-} +
+}
 
-    new App();
+new App();
