@@ -48,6 +48,6 @@ class App {
             console.log(`Server started on http://localhost:${this.port}`);
         });
     }
-} +
+}
 
-    new App();
+new App();
