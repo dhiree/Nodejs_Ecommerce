@@ -3,11 +3,11 @@ import productVariants from "../services/product.variantss.service"
 import Validate from "../validation/joi-validation"
 
 
-class ProductVariantsController {
+class VariantsController {
     public async createProductVariants(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const productVariantData = req.body;
-            const { error } = await Validate.createProductVariant(productVariantData);
+            const { error } = await Validate.createVariant(productVariantData);
             if (error) {
                 throw new Error(error.details[0].message);
             }
@@ -18,6 +18,7 @@ class ProductVariantsController {
             next(error)
         }
     }
+
     public async getProductVariants(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { variantId } = req.params;
@@ -34,6 +35,23 @@ class ProductVariantsController {
             next(error)
         }
     }
+
+    public async getAllProductVariants(req: Request, res: Response, next: NextFunction): Promise<void> {
+        try {
+            const getProduct = await productVariants.getAllProductVariants()
+            if (!getProduct) {
+                throw new Error('User not found....!');
+            }
+            res.status(200).json({
+                Message: "successful",
+                data: getProduct
+            })
+        } catch (error) {
+            console.log("Product Not Get..")
+            next(error)
+        }
+    }
+
     public async updateProductVariants(req: Request, res: Response, next: NextFunction) {
         try {
             const { productVariantId } = req.params;
@@ -50,6 +68,7 @@ class ProductVariantsController {
             next(error)
         }
     }
+
     public async deleteProductVariants(req: Request, res: Response, next: NextFunction) {
         try {
             const { productId } = req.params;
@@ -62,8 +81,6 @@ class ProductVariantsController {
     }
 
 }
-export default new ProductVariantsController();
+export default new VariantsController();
 
 
-
-// get is panding

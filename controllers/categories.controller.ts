@@ -1,29 +1,28 @@
 import { Request, Response, NextFunction } from "express"
-import productService from "../services/product-categories.service"
+import categoryService from '../services/categories.service'
 import Validate from '../validation/joi-validation';
 
 
-class ProductCategoriesController {
+class CategoriesController {
 
-    public async createProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async createCategory(req: Request, res: Response, next: NextFunction) {
         try {
             const productData = req.body;
-            const { error } = await Validate.createProduct(productData);
+            const { error } = await Validate.createCategory(productData);
             if (error) {
                 throw new Error(error.details[0].message);
             }
-            const newProduct = await productService.createProduct(productData)
+            const newProduct = await categoryService.createCategory(productData)
             res.status(200).json(newProduct)
         } catch (error) {
-            console.log("error")
+            console.log("Categories Not Create", error)
             next(error)
         }
     }
 
-    public async getProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async getAllCategory(req: Request, res: Response, next: NextFunction) {
         try {
-            const { productId } = req.params;
-            const product = await productService.getProduct(productId);
+            const product = await categoryService.getAllCategory();
             if (!product) {
                 throw new Error('User not found....!');
             }
@@ -36,11 +35,27 @@ class ProductCategoriesController {
         }
     }
 
-    public async updateProduct(req: Request, res: Response, next: NextFunction): Promise<void> {
+    public async getCategory(req: Request, res: Response, next: NextFunction) {
+        try {
+            const { productId } = req.params;
+            const product = await categoryService.getCategory(productId);
+            if (!product) {
+                throw new Error('User not found....!');
+            }
+            res.status(201).json({
+                data: product,
+                message: "Success"
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    public async updateCategory(req: Request, res: Response, next: NextFunction) {
         try {
             const productId = req.params.id;
             const productData = req.body;
-            const updateProduct = await productService.updateProduct(productId, productData)
+            const updateProduct = await categoryService.updateCategory(productId, productData)
             if (!updateProduct) {
                 throw new Error('Product Not Updated')
             }
@@ -54,10 +69,10 @@ class ProductCategoriesController {
         }
     }
 
-    public async deleteProduct(req: Request, res: Response, next: NextFunction) {
+    public async deleteCategory(req: Request, res: Response, next: NextFunction) {
         try {
             const productId = req.params.id
-            const deleteProduct = await productService.deleteProduct(productId)
+            const deleteProduct = await categoryService.deleteCategory(productId)
             res.status(201).json({
                 deleteProduct,
                 message: "Product Was Delete"
@@ -68,7 +83,7 @@ class ProductCategoriesController {
         }
     }
 }
-export default new ProductCategoriesController();
+export default new CategoriesController();
 
 
 // completed

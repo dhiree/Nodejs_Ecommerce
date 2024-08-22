@@ -12,11 +12,35 @@ class ProductVariantsService {
         }
     }
     public async getProductVariants(variantId: any) {
-        return await productVariantsModel.findOne({ _id: variantId })
+        try {
+            const getVariant = await productVariantsModel.findOne({ _id: variantId })
+                .populate(['categoryId', 'subcategoryId', 'productId'])
+            if (!getVariant) {
+                throw new Error('Get VariantBy Not Found')
+            }
+            return getVariant
+        } catch (error) {
+            console.log('Invaled Id ', error)
+        }
     }
+
+    public async getAllProductVariants() {
+        try {
+            const variant = await productVariantsModel.find()
+                .populate(['categoryId', 'subcategoryId', 'productId'])
+            if (!variant) {
+                throw new Error('Variant Not Found')
+            }
+            return variant
+        } catch (error) {
+            console.log('Product Not Found')
+        }
+    }
+
     public async updateProductVariants(productVariantId: any, productData: any) {
         return await productVariantsModel.findOneAndUpdate(productVariantId, productData)
     }
+
     public async deleteProductVariants(productVariantId: any) {
         return await productVariantsModel.findByIdAndDelete(productVariantId)
     }

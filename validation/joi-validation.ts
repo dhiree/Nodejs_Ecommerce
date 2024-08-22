@@ -89,7 +89,7 @@ const createUserSchema = Joi.object()
             })
     });
 
-const productCategoriesSchema = Joi.object()
+const categorySchema = Joi.object()
     .keys({
         name: Joi.string()
             .required()
@@ -110,10 +110,9 @@ const productCategoriesSchema = Joi.object()
             }),
     })
 
-const productVariantSchema = Joi.object()
+const createVariantSchema = Joi.object()
     .keys({
         name: Joi.string()
-            .empty()
             .required()
             .messages({
                 'string.base': `Name must be a type of string`,
@@ -129,12 +128,49 @@ const productVariantSchema = Joi.object()
                 'string.empty': `description is required`,
                 'any.exists': `description already exists`,
             }),
+        // parentId: Joi.string()
+        //     .required()
+        //     .messages({
+        //         'string.base': `parentId must be a type of String`,
+        //         'any.required': `parentId is required`,
+        //         'string.empty': `parentId is required`,
+        //         'any.exists': `parentId already exists`,
+        //     }),
     })
 
-const createtProductManagementSchema = Joi.object()
+
+
+const createtProductSchema = Joi.object({
+    name: Joi.string().required().messages({
+        'string.base': `Name must be a type of string`,
+        'string.empty': `Name is required`,
+        'any.required': `Name is required`,
+    }),
+    description: Joi.string().required().messages({
+        'string.base': `description must be a type of string`,
+        'any.required': `description is required`,
+        'string.empty': `description is required`,
+    }),
+    price: Joi.number().required().messages({
+        'number.base': `Price must be a type of number`,
+        'any.required': `Price is required`,
+        'number.empty': `Price is required`,
+    }),
+    image: Joi.string().required().messages({
+        'string.base': `image must be a type of string`,
+        'any.required': `image is required`,
+        'string.empty': `image is required`,
+    }),
+    categoryId: Joi.string().allow('').optional().messages({
+        'string.base': `categoryId must be a type of string`,
+    }),
+    subcategoryId: Joi.string().allow('').optional().messages({
+        'string.base': `subcategoryId must be a type of string`,
+    })
+});
+const SubcategorySchema = Joi.object()
     .keys({
         name: Joi.string()
-            .empty()
             .required()
             .messages({
                 'string.base': `Name must be a type of string`,
@@ -143,6 +179,7 @@ const createtProductManagementSchema = Joi.object()
                 'any.exists': `Name already exists`,
             }),
         description: Joi.string()
+            .empty()
             .required()
             .messages({
                 'string.base': `description must be a type of string`,
@@ -150,40 +187,35 @@ const createtProductManagementSchema = Joi.object()
                 'string.empty': `description is required`,
                 'any.exists': `description already exists`,
             }),
-        price: Joi.number()
+        parentId: Joi.string()
             .required()
             .messages({
-                'string.base': `Price must be a type of number`,
-                'any.required': `Price is required`,
-                'string.empty': `Price is required`,
-                'any.exists': `price already exists`,
-            }),
-        image: Joi.string()
-            .required()
-            .messages({
-                'string.base': `image must be a type of string`,
-                'any.required': `image is required`,
-                'string.empty': `image is required`,
-                'any.exists': `image already exists`,
+                'string.base': `parentId must be a type of string`,
+                'any.required': `parentId is required`,
+                'string.empty': `parentId is required`,
+                'any.exists': `parentId already exists`,
             }),
     })
-
 
 const createUser = async (data: any) => {
     return createUserSchema.validateAsync(data, options);
 };
+const createCategory = async (data: any) => {
+    return categorySchema.validateAsync(data, options)
+}
+const createVariant = async (data: any) => {
+    return createVariantSchema.validateAsync(data, options);
+}
 const createProduct = async (data: any) => {
-    return productCategoriesSchema.validateAsync(data, options)
+    return createtProductSchema.validateAsync(data, options);
 }
-const createProductVariant = async (data: any) => {
-    return productVariantSchema.validateAsync(data, options);
-}
-const createProductManagement = async (data: any) => {
-    return createtProductManagementSchema.validateAsync(data, options);
+const createSubCategorie = async (data: any) => {
+    return SubcategorySchema.validateAsync(data, options)
 }
 export default {
     createUser,
+    createCategory,
+    createVariant,
     createProduct,
-    createProductVariant,
-    createProductManagement
+    createSubCategorie
 };

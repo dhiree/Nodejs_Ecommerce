@@ -1,6 +1,9 @@
-export interface productManagementInterface {
+import { ObjectId } from 'mongoose';
+export interface productInterface {
     name: string,
     description: string,
     price: number,
-    image: string
+    image: string,
+    categoryId: ObjectId,
+    subcategoryId: ObjectId
 }

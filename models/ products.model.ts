@@ -1,8 +1,8 @@
-import { model, Schema, Document, Model } from 'mongoose'
-import { producttInterface } from '../interfaces/ Product.interface'
+import mongoose, { model, Schema, Document, Model } from 'mongoose'
+import { productInterface } from '../interfaces/product.interface'
 
 
-const productSchema: Schema<producttInterface & Document> = new Schema({
+const ProductSchema: Schema<productInterface & Document> = new Schema({
     name: {
         type: String,
         required: true
@@ -18,10 +18,17 @@ const productSchema: Schema<producttInterface & Document> = new Schema({
     image: {
         type: String,
         required: true
+    },
+    categoryId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'categories'
+    },
+    subcategoryId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'categories'
     }
 
 }, { timestamps: true })
 
-const productModel = model<producttInterface & Document>('Product', productSchema)
-
+const productModel = model<productInterface & Document>('Product', ProductSchema)
 export default productModel

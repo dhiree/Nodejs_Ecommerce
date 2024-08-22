@@ -1,5 +1,6 @@
-import { model, Schema, Document } from 'mongoose'
+import mongoose, { model, Schema, Document } from 'mongoose'
 import { productVariantsInterface } from "../interfaces/peoduct-variant.interface"
+
 
 
 const productVariantSchema: Schema<productVariantsInterface & Document> = new Schema({
@@ -7,9 +8,32 @@ const productVariantSchema: Schema<productVariantsInterface & Document> = new Sc
         type: String,
         required: true
     },
+
     description: {
         type: String,
         required: true
+    },
+
+    colour: {
+        type: String,
+        required: true
+    },
+
+    size: {
+        type: String,
+        required: true
+    },
+    productId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'Product'
+    },
+    categoryId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'categories'
+    },
+    subcategoryId: {
+        type: mongoose.Schema.ObjectId,
+        ref: 'categories'
     }
 
 }, { timestamps: true })

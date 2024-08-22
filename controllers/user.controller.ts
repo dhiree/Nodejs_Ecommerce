@@ -16,6 +16,7 @@ class UserController {
             next(error);
         }
     }
+
     public async login(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { email, password } = req.body;
@@ -30,6 +31,7 @@ class UserController {
             next(error)
         }
     }
+
     public async getUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const { userId } = req.params
@@ -45,6 +47,7 @@ class UserController {
             next(error);
         }
     }
+
     public async updateUser(req: Request, res: Response, next: NextFunction): Promise<void> {
         try {
             const userId = req.params.id;

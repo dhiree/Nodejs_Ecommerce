@@ -1,8 +1,9 @@
 import mongoose from 'mongoose';
 import userRoute from './routes/user.route';
-import productCategories from './routes/product-categorie.Route'
+import categories from './routes/categorie.route'
 import productVariants from './routes/product-variants.route'
 import product from './routes/product.Route'
+import subCategories from './routes/sub-categories.routs'
 import express from "express"
 
 
@@ -37,17 +38,22 @@ class App {
     }
 
     private initializeRoutes(): void {
+        this.app.use('/health', (req, res) => {
+            res.status(200).json({ msg: "Server is healthy" });
+        })
         this.app.use('/user', userRoute);
-        this.app.use('/productCategories', productCategories)
-        this.app.use('/productVariant', productVariants)
+        this.app.use('/categories', categories)
+        this.app.use('/variant', productVariants)
         this.app.use('/product', product)
+        this.app.use('/sub-categories', subCategories)
     }
+
 
     private startServer(): void {
         this.app.listen(this.port, () => {
             console.log(`Server started on http://localhost:${this.port}`);
         });
     }
-} +
+}
 
-    new App();
+new App();
